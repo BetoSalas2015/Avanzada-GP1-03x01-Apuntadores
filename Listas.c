@@ -1,61 +1,84 @@
-#include <stdio.h>		// Para las funciones de i/o
-#include <stdlib.h>		// Para el usoi de system()
+#include <stdio.h>
+#include <stdlib.h>
+#include <malloc.h>		// Para el manejo de memoria dinámica
 
-void porValor(int variable);
-void porReferencia(int *variable);
+struct Nodo 
+{  
+	char info;
+	struct Nodo *sig;
+};
 
-void porValor(int variable)
+typedef struct Nodo nodo;
+
+nodo *raiz = NULL;		// La lista vacía
+
+void insert(char dato)
 {
-	variable += 5;
-	printf("Variable = %d\n", variable);
+	nodo *nuevo = NULL;
+	nuevo = (nodo *) malloc( sizeof(nodo) );
+	if( nuevo == NULL )
+	{
+		printf("No hay memoria suficiente! \n");
+		exit(1);
+	}
+	nuevo ->info = dato;
+	nuevo ->sig = NULL;
+
+	if(raiz == NULL)
+	{
+		raiz = nuevo;
+	} else {
+		nodo *recorre = raiz;
+		while( recorre -> sig != NULL)
+			recorre = recorre ->sig;
+		recorre -> sig = nuevo;
+	}
 }
 
-void porReferencia(int *variable)
+void insert1(char dato)
 {
-	*variable += 5;
-	printf("Variable = %d\n", *variable);
+	nodo *nuevo = NULL;
+	nuevo = (nodo *) malloc( sizeof(nodo) );
+	if( nuevo == NULL )
+	{
+		printf("No hay memoria suficiente! \n");
+		exit(1);
+	}
+	nuevo ->info = dato;
+	nuevo ->sig = NULL;
+
+	if(raiz == NULL)
+	{
+		raiz = nuevo;
+	} else {
+		nodo *recorre = raiz;
+		while( recorre -> sig != NULL)
+			recorre = recorre ->sig;
+		recorre -> sig = nuevo;
+	}
+}
+
+void imprimeLista()
+{
+	nodo *recorre = raiz;
+	while( recorre  != NULL) {
+		printf("%c, ", recorre->info);
+		recorre = recorre ->sig;
+	}
+	printf("\n");
 }
 
 int main()
-{
-	int costo = 60;		// Declaro una variable de tipo entero llamada costo
-	int *pointer = NULL;		// Declaro un ap.untador a enteros llamado pointer
-	int arreglo[5] = { 0, 1, 2, 3, 4};	// declaro un arreglo de 5 enteros
-	int *ptrArreglo[5];					// declaro un arreglo de 5 apuntadores a entero
+{	
+	insert('R');
+	insert('o');
+	insert('b');
+	insert('e');
+	insert('r');
+	insert('t');
+	insert('o');
 
-	printf("La direccion de memoria de costo es: %p y hay %d\n", &costo, costo);
-
-	pointer = &costo;
-	printf("La direccion de memoria de pointer es: %p y hay %p\n", &pointer, pointer);
-
-	printf("El contenido (*) de pointer es %d\n", *pointer);
-
-	*pointer = 50; 
-	printf("La direccion de memoria de costo es: %p y hay %d\n", &costo, costo);
-
-	////====================================================================
-	//printf("La direccion del arreglo[0] es %p\n", &arreglo[0]);
-	//printf("La direccion del arreglo[1] es %p\n", &arreglo[1]);
-	//printf("La direccion del arreglo[2] es %p\n", &arreglo[2]);
-	//printf("La direccion del arreglo[3] es %p\n", &arreglo[3]);
-	//printf("La direccion del arreglo[4] es %p\n", &arreglo[4]);
-
-	////------------------- apuntadores a arreglos----------
-	//pointer = arreglo;
-	//printf("La direccion de memoria de pointer es: %p y hay %d\n", pointer, *pointer);
-
-	//// ------------------ arreglos de apuntadores -----------
-
-	//ptrArreglo[2] = &arreglo[2];
-	//printf("La direccion de memoria de ptrArreglo[2] es: %p y hay %d\n", ptrArreglo[2], *ptrArreglo[2]);
-
-	porValor(costo);
-	printf("Costo = %d\n", costo);
-	porReferencia(&costo);
-	printf("Costo = %d\n", costo);
-
-	//scanf("%d", &costo)
-
+	imprimeLista();
 
 	system("pause");
 	return 0;
