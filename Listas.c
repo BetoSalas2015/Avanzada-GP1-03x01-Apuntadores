@@ -51,6 +51,12 @@ void insertn(char dato, int pos)		// insertn('k', 2)
 	{
 		raiz = nuevo;
 	} 
+	if(pos == 1)
+	{
+		nodo *siguiente = raiz;
+		raiz = nuevo;
+		nuevo -> sig = siguiente;
+	}
 	else 
 	{
 		int cont = 1;
@@ -93,6 +99,38 @@ void imprimeLista()
 	printf("\n");
 }
 
+
+char remueve(void)
+{
+	nodo *anterior = raiz;
+	char dato;
+	if( raiz == NULL) 
+	{
+		printf("La lista está vacía.");  //  _Underflow: 
+		return '\0';
+	}
+	if( anterior ->sig == NULL)
+	{
+		dato = anterior -> info;
+		raiz = NULL;
+		free(anterior);
+	}
+	else
+	{
+		nodo *siguiente = anterior ->sig;
+		while( siguiente->sig != NULL)
+		{
+			anterior = anterior ->sig;
+			siguiente = siguiente->sig;
+		}
+		dato = siguiente -> info;
+		anterior ->sig = NULL;
+		free(siguiente);
+	}
+
+	return dato;
+}
+
 int main()
 {	
 	insert('R');
@@ -105,7 +143,13 @@ int main()
 
 	imprimeLista();
 
-	insertn('k',2);
+	insertn('k',1);
+
+	imprimeLista();
+
+	printf("Salió la letra: %c\n", remueve()   );
+	printf("Salió la letra: %c\n", remueve()   );
+	printf("Salió la letra: %c\n", remueve()   );
 
 	imprimeLista();
 
