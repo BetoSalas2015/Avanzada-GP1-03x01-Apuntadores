@@ -131,6 +131,56 @@ char remueve(void)
 	return dato;
 }
 
+
+char remueve1(void)
+{
+	nodo *anterior = raiz;
+	char dato;
+	if( raiz == NULL) 
+	{
+		printf("La lista está vacía.");  //  _Underflow: 
+		return '\0';
+	}
+	dato = anterior -> info;
+	raiz = anterior ->sig;
+	free(anterior);
+	return dato;
+}
+
+
+char remueven(int pos)
+{
+	nodo *anterior = raiz;
+	char dato;
+	if( raiz == NULL) 
+	{
+		printf("La lista está vacía.");  //  _Underflow: 
+		return '\0';
+	}
+	if( anterior ->sig == NULL)
+	{
+		dato = anterior -> info;
+		raiz = NULL;
+		free(anterior);
+	}
+	else
+	{
+		nodo *siguiente = anterior ->sig;
+		while( siguiente->sig != NULL)
+		{
+			anterior = anterior ->sig;
+			siguiente = siguiente->sig;
+		}
+		dato = siguiente -> info;
+		anterior ->sig = NULL;
+		free(siguiente);
+	}
+
+	return dato;
+}
+
+
+
 int main()
 {	
 	insert('R');
@@ -150,6 +200,11 @@ int main()
 	printf("Salió la letra: %c\n", remueve()   );
 	printf("Salió la letra: %c\n", remueve()   );
 	printf("Salió la letra: %c\n", remueve()   );
+
+	imprimeLista();
+
+	printf("Salió la letra: %c\n", remueve1()   );
+	printf("Salió la letra: %c\n", remueve1()   );
 
 	imprimeLista();
 
