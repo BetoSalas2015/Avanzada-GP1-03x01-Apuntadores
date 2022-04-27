@@ -157,25 +157,31 @@ char remueven(int pos)
 		printf("La lista está vacía.");  //  _Underflow: 
 		return '\0';
 	}
-	if( anterior ->sig == NULL)
+	if(pos == 1)
 	{
-		dato = anterior -> info;
-		raiz = NULL;
-		free(anterior);
-	}
-	else
-	{
-		nodo *siguiente = anterior ->sig;
-		while( siguiente->sig != NULL)
+		nodo *elimina = raiz;
+		raiz = raiz -> sig;			// equivale a: raiz = elimna -> sig;
+		dato = elimina ->info;
+		free(elimina);
+	} else {
+		int cont = 1; 
+		nodo *elimina = NULL, *siguiente = NULL;
+		while(cont != pos - 1) 
 		{
 			anterior = anterior ->sig;
-			siguiente = siguiente->sig;
+			cont++;
+			if(anterior ->sig == NULL)	// es el ultimo nodo?
+			{
+				printf("El elemento a borrar no existe.\n");
+				return;
+			}
 		}
-		dato = siguiente -> info;
-		anterior ->sig = NULL;
-		free(siguiente);
+		elimina = anterior ->sig;
+		siguiente = elimina ->sig;
+		dato = elimina -> info;
+		anterior ->sig = siguiente;
+		free(elimina);
 	}
-
 	return dato;
 }
 
@@ -205,6 +211,10 @@ int main()
 
 	printf("Salió la letra: %c\n", remueve1()   );
 	printf("Salió la letra: %c\n", remueve1()   );
+
+	imprimeLista();
+
+	printf("Salió la letra: %c\n", remueven(4)   );
 
 	imprimeLista();
 
