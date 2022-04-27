@@ -12,7 +12,7 @@ typedef struct Nodo nodo;
 
 nodo *raiz = NULL;		// La lista vacía
 
-void insert(char dato)
+nodo *insert(nodo *raiz, char dato)
 {
 	nodo *nuevo = NULL;
 	nuevo = (nodo *) malloc( sizeof(nodo) );
@@ -33,6 +33,7 @@ void insert(char dato)
 			recorre = recorre ->sig;
 		recorre -> sig = nuevo;
 	}
+	return raiz;
 }
 
 void insertn(char dato, int pos)		// insertn('k', 2)
@@ -89,7 +90,8 @@ void insert1(char dato)
 }
 
 
-void imprimeLista()
+
+void imprimeLista(nodo *raiz)
 {
 	nodo *recorre = raiz;
 	while( recorre  != NULL) {
@@ -189,34 +191,28 @@ char remueven(int pos)
 
 int main()
 {	
-	insert('R');
-	insert('o');
-	insert('b');
-	insert('e');
-	insert('r');
-	insert('t');
-	insert('o');
+	nodo *lista1 = NULL, *lista2 = NULL; 
 
-	imprimeLista();
+	lista1 = insert(lista1, 'R');
+	lista1 = insert(lista1, 'o');
+	lista1 = insert(lista1, 'b');
+	lista1 = insert(lista1, 'e');
+	lista1 = insert(lista1, 'r');
+	lista1 = insert(lista1, 't');
+	lista1 = insert(lista1, 'o');
 
-	insertn('k',1);
+	lista2 = insert(lista2, 'S');
+	lista2 = insert(lista2, 'a');
+	lista2 = insert(lista2, 'l');
+	lista2 = insert(lista2, 'a');
+	lista2 = insert(lista2, 'z');
+	lista2 = insert(lista2, 'a');
+	lista2 = insert(lista2, 'r');
 
-	imprimeLista();
 
-	printf("Salió la letra: %c\n", remueve()   );
-	printf("Salió la letra: %c\n", remueve()   );
-	printf("Salió la letra: %c\n", remueve()   );
+	imprimeLista(lista1);
+	imprimeLista(lista2);
 
-	imprimeLista();
-
-	printf("Salió la letra: %c\n", remueve1()   );
-	printf("Salió la letra: %c\n", remueve1()   );
-
-	imprimeLista();
-
-	printf("Salió la letra: %c\n", remueven(4)   );
-
-	imprimeLista();
 
 	system("pause");
 	return 0;
