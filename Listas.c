@@ -36,7 +36,7 @@ nodo *insert(nodo *raiz, char dato)
 	return raiz;
 }
 
-void insertn(char dato, int pos)		// insertn('k', 2)
+nodo *insertn(nodo *raiz, char dato, int pos)		// insertn('k', 2)
 {
 	nodo *nuevo = NULL;
 	nuevo = (nodo *) malloc( sizeof(nodo) );
@@ -72,9 +72,10 @@ void insertn(char dato, int pos)		// insertn('k', 2)
 		anterior -> sig = nuevo;
 		nuevo -> sig = siguiente;
 	}
+	return raiz;
 }
 
-void insert1(char dato)
+nodo *insert1(nodo *raiz, char dato)
 {
 	nodo *nuevo = NULL;
 	nuevo = (nodo *) malloc( sizeof(nodo) );
@@ -87,6 +88,8 @@ void insert1(char dato)
 	nuevo ->sig = NULL;
 	nuevo ->sig = raiz;
 	raiz = nuevo;
+
+	return raiz;
 }
 
 
@@ -101,11 +104,9 @@ void imprimeLista(nodo *raiz)
 	printf("\n");
 }
 
-
-char remueve(void)
+nodo *remueve(nodo *raiz, char *dato)
 {
 	nodo *anterior = raiz;
-	char dato;
 	if( raiz == NULL) 
 	{
 		printf("La lista está vacía.");  //  _Underflow: 
@@ -113,7 +114,7 @@ char remueve(void)
 	}
 	if( anterior ->sig == NULL)
 	{
-		dato = anterior -> info;
+		*dato = anterior -> info;
 		raiz = NULL;
 		free(anterior);
 	}
@@ -125,35 +126,33 @@ char remueve(void)
 			anterior = anterior ->sig;
 			siguiente = siguiente->sig;
 		}
-		dato = siguiente -> info;
+		*dato = siguiente -> info;
 		anterior ->sig = NULL;
 		free(siguiente);
 	}
 
-	return dato;
+	return raiz;
 }
 
 
-char remueve1(void)
+nodo *remueve1(nodo *raiz, char *dato)
 {
 	nodo *anterior = raiz;
-	char dato;
 	if( raiz == NULL) 
 	{
 		printf("La lista está vacía.");  //  _Underflow: 
 		return '\0';
 	}
-	dato = anterior -> info;
+	*dato = anterior -> info;
 	raiz = anterior ->sig;
 	free(anterior);
-	return dato;
+	return raiz;
 }
 
 
-char remueven(int pos)
+nodo * remueven(nodo * raiz, int pos, char *dato)
 {
 	nodo *anterior = raiz;
-	char dato;
 	if( raiz == NULL) 
 	{
 		printf("La lista está vacía.");  //  _Underflow: 
@@ -163,7 +162,7 @@ char remueven(int pos)
 	{
 		nodo *elimina = raiz;
 		raiz = raiz -> sig;			// equivale a: raiz = elimna -> sig;
-		dato = elimina ->info;
+		*dato = elimina ->info;
 		free(elimina);
 	} else {
 		int cont = 1; 
@@ -180,18 +179,18 @@ char remueven(int pos)
 		}
 		elimina = anterior ->sig;
 		siguiente = elimina ->sig;
-		dato = elimina -> info;
+		*dato = elimina -> info;
 		anterior ->sig = siguiente;
 		free(elimina);
 	}
-	return dato;
+	return raiz;
 }
-
 
 
 int main()
 {	
 	nodo *lista1 = NULL, *lista2 = NULL; 
+	char dato;
 
 	lista1 = insert(lista1, 'R');
 	lista1 = insert(lista1, 'o');
@@ -209,6 +208,17 @@ int main()
 	lista2 = insert(lista2, 'a');
 	lista2 = insert(lista2, 'r');
 
+
+	imprimeLista(lista1);
+	imprimeLista(lista2);
+
+	lista1 = remueve1(lista1, &dato);
+	printf("La letra que salió fue: %c\n", dato);
+	lista2 = remueve(lista2, &dato);
+	printf("La letra que salió fue: %c\n", dato);
+	lista2 = remueven(lista2, 3, &dato);
+	printf("La letra que salió fue: %c\n", dato);
+	lista1 = insert(lista1, 'Z');
 
 	imprimeLista(lista1);
 	imprimeLista(lista2);
